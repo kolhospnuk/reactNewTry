@@ -1,14 +1,28 @@
 
 import React from "react";
-import './app-header.css';
+import './post-list.css';
+import PostListItem from "../postListItem/postListItem";
 
-const AppHeader = () => {
+const PostList = ({posts, onDelete, onToggleImportant, onToggleLike}) => {
+
+    const elements = posts.map(item => {
+        const {id, ...itemProps} = item;
+        return (
+            <li key={id} className='list-group-item'>
+                <PostListItem
+                    {...itemProps}
+                    onDelete={() => onDelete(id)}
+                    onToggleImportant={() => onToggleImportant(id)}
+                    onToggleLike={() => onToggleLike(id)}/>
+            </li>
+        )
+    })
+
     return (
-        <div className='app-header d-flex'>
-            <h1>Momot Anton</h1>
-            <h2>5 записей, из ни понравилось 0</h2>
-        </div>
+        <ul className='app-list list-group'>
+            {elements}
+        </ul>
     )
 }
 
-export default AppHeader;
+export default PostList;
